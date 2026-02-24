@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ugandamartyrssacco/splashscreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,9 +16,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        
-      )
+      home:Splashscreen()
     );
   }
 }
