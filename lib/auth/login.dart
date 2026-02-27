@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ugandamartyrssacco/treasurer/dashboard.dart';
 import 'signup.dart';
 
 class Login extends StatefulWidget {
@@ -32,6 +33,7 @@ class _LoginState extends State<Login> {
         setState(() {
           _isLoading = false;
         });
+        Get.to(TreasurerDashboard());
          ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Login successful!')),
         );
