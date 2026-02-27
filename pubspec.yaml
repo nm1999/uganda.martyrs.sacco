@@ -17,6 +17,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   google_fonts: ^8.0.2
   get: ^4.7.3
+  mobile_scanner: ^3.0.0
 
 dev_dependencies:
   flutter_test:

@@ -15,9 +15,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
-  initstate(){
-    Timer.delay(Duration(seconds: 3),(){
+  void initstate() {
+    Timer(Duration(seconds: 3), () {
       Get.to(Splashscreen());
     });
     super.initState();
@@ -25,10 +24,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      home:Splashscreen()
-    );
+    return GetMaterialApp(home: Splashscreen());
   }
 }
-
-

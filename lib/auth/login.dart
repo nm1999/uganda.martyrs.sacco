@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'signup.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -26,25 +28,19 @@ class _LoginState extends State<Login> {
       setState(() {
         _isLoading = true;
       });
-      // TODO: Implement login logic here
-      // This is where you'd call your authentication service
-      Future.delayed(const Duration(seconds: 2), () {
+      if(_passwordController.text == "1234556"){
         setState(() {
           _isLoading = false;
         });
-        ScaffoldMessenger.of(context).showSnackBar(
+         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Login successful!')),
         );
-      });
+      }
     }
   }
 
   void _navigateToSignup() {
-    // TODO: Navigate to signup page
-    // Navigator.pushNamed(context, '/signup');
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Navigate to signup page')),
-    );
+   Get.to(const Signup());
   }
 
   @override
