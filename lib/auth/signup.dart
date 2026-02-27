@@ -9,12 +9,11 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
-  final _formKey = GlobalKey<FormState>();
+
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   final _qrController = TextEditingController();
-  bool _obscurePassword = true;
-  bool _isLoading = false;
+
 
   @override
   void dispose() {
@@ -34,8 +33,6 @@ class _SignupState extends State<Signup> {
       });
     }
   }
-
-  void _handleSignup() {}
 
   @override
   Widget build(BuildContext context) {
