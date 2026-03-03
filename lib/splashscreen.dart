@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'dart:async';
+
+import 'package:ugandamartyrssacco/auth/login.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});
@@ -45,6 +49,9 @@ class _SplashscreenState extends State<Splashscreen>
     // Start both animations
     _scaleController.forward();
     _colorController.forward();
+    Timer(Duration(seconds: 3), () {
+      Get.to(() => const Login());
+    });
   }
 
   @override
