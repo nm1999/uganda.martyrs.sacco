@@ -29,7 +29,7 @@ class _LoginState extends State<Login> {
       setState(() {
         _isLoading = true;
       });
-      if(_passwordController.text == "1234556"){
+      if(_passwordController.text == "123456"){
         setState(() {
           _isLoading = false;
         });
