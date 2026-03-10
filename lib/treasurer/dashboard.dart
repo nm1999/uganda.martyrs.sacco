@@ -22,6 +22,7 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
         title: const Text('Treasurer Dashboard'),
         elevation: 0,
         backgroundColor: Colors.blue[700],
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
