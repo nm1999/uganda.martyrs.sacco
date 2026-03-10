@@ -278,7 +278,7 @@ class _UserDashboardState extends State<UserDashboard> {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.green.withOpacity(0.2),
+              color: Colors.green[100],
               borderRadius: BorderRadius.circular(8),
             ),
             padding: const EdgeInsets.all(8),
