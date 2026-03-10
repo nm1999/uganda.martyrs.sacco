@@ -194,7 +194,7 @@ class _UserDashboardState extends State<UserDashboard> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.green.withOpacity(0.3),
+            color: Colors.green[300]!,
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -245,7 +245,7 @@ class _UserDashboardState extends State<UserDashboard> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey[100]!,
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -269,7 +269,7 @@ class _UserDashboardState extends State<UserDashboard> {
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey[100]!,
             width: 1,
           ),
         ),
