@@ -203,7 +203,7 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey,
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -214,7 +214,7 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: color.withOpacity(0.2),
+              
               borderRadius: BorderRadius.circular(12),
             ),
             padding: const EdgeInsets.all(12),
@@ -259,7 +259,7 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey[300]!,
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -271,7 +271,7 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: color.withOpacity(0.2),
+              
               borderRadius: BorderRadius.circular(8),
             ),
             padding: const EdgeInsets.all(8),
