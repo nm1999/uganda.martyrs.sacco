@@ -9,11 +9,9 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
-
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   final _qrController = TextEditingController();
-
 
   @override
   void dispose() {
@@ -37,29 +35,49 @@ class _SignupState extends State<Signup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Sign Up')),
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: const Text(
+          'Sign Up',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 60),
+              SizedBox(height: 10),
               Center(
                 child: Text(
                   'To create an account, the treasurer must first create your details through the application. And you will scan QR code from his phone to confirm your account. ',
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.headlineSmall?.copyWith(fontSize: 14),
                 ),
               ),
               const SizedBox(height: 40),
               Column(
                 children: [
                   const SizedBox(height: 20),
-                  IconButton(
-                    icon: const Icon(Icons.qr_code_scanner),
-                    onPressed: _scanQr,
+                  //add a button of scanning
+                  SizedBox(
+                    width: 400,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: _scanQr,
+                      child: Text(
+                        "Scan QR code",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                   ),
                 ],
               ),

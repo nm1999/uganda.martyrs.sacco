@@ -29,20 +29,23 @@ class _LoginState extends State<Login> {
       setState(() {
         _isLoading = true;
       });
-      if(_passwordController.text == "123456"){
+      if (_passwordController.text == "123456") {
         setState(() {
           _isLoading = false;
         });
         Get.to(TreasurerDashboard());
-         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Login successful!')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Login successful!')));
       }
     }
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   void _navigateToSignup() {
-   Get.to(const Signup());
+    Get.to(const Signup());
   }
 
   @override
@@ -62,16 +65,15 @@ class _LoginState extends State<Login> {
                   children: [
                     Text(
                       'Welcome Back',
-                      style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                      style: Theme.of(context).textTheme.headlineLarge
+                          ?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       'Login to your account',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Colors.grey[600],
-                          ),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
                     ),
                   ],
                 ),
@@ -95,9 +97,7 @@ class _LoginState extends State<Login> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
-                            color: Colors.grey[300]!,
-                          ),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
                         ),
                       ),
                       validator: (value) {
@@ -135,9 +135,7 @@ class _LoginState extends State<Login> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
-                            color: Colors.grey[300]!,
-                          ),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
                         ),
                       ),
                       validator: (value) {
@@ -168,29 +166,34 @@ class _LoginState extends State<Login> {
                     ),
                     const SizedBox(height: 30),
                     // Login Button
-                    ElevatedButton(
-                      onPressed: _isLoading ? null : _handleLogin,
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                    SizedBox(
+                      width: 400,
+                      child: ElevatedButton(
+                        onPressed: _isLoading ? null : _handleLogin,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
+                        child: _isLoading
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : const Text(
+                                'Login',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
                       ),
-                      child: _isLoading
-                          ? const SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                              ),
-                            )
-                          : const Text(
-                              'Login',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
                     ),
                   ],
                 ),
@@ -202,9 +205,7 @@ class _LoginState extends State<Login> {
                 children: [
                   Text(
                     "Don't have an account? ",
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                    ),
+                    style: TextStyle(color: Colors.grey[600]),
                   ),
                   GestureDetector(
                     onTap: _navigateToSignup,
