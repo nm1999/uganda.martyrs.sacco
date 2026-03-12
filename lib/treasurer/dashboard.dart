@@ -19,7 +19,7 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Treasurer Dashboard'),
+        toolbarHeight: 10,
         elevation: 0,
         backgroundColor: Colors.blue[700],
         automaticallyImplyLeading: false,
@@ -38,6 +38,7 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
               'Financial Overview',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
+                    fontSize:16
                   ),
             ),
             const SizedBox(height: 16),
@@ -72,6 +73,7 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
               'Membership & Loans',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
+                    fontSize:16
                   ),
             ),
             const SizedBox(height: 16),
@@ -105,6 +107,7 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
               'Quick Actions',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
+                    fontSize: 16
                   ),
             ),
             const SizedBox(height: 16),
@@ -177,6 +180,7 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
+                  fontSize: 18
                 ),
           ),
           const SizedBox(height: 8),

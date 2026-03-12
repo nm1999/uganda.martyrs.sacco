@@ -29,20 +29,23 @@ class _LoginState extends State<Login> {
       setState(() {
         _isLoading = true;
       });
-      if(_passwordController.text == "123456"){
+      if (_passwordController.text == "123456") {
         setState(() {
           _isLoading = false;
         });
         Get.to(TreasurerDashboard());
-         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Login successful!')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Login successful!')));
       }
     }
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   void _navigateToSignup() {
-   Get.to(const Signup());
+    Get.to(const Signup());
   }
 
   @override
@@ -62,16 +65,15 @@ class _LoginState extends State<Login> {
                   children: [
                     Text(
                       'Welcome Back',
-                      style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                      style: Theme.of(context).textTheme.headlineLarge
+                          ?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       'Login to your account',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Colors.grey[600],
-                          ),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
                     ),
                   ],
                 ),
@@ -95,9 +97,7 @@ class _LoginState extends State<Login> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
-                            color: Colors.grey[300]!,
-                          ),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
                         ),
                       ),
                       validator: (value) {
@@ -135,9 +135,7 @@ class _LoginState extends State<Login> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
-                            color: Colors.grey[300]!,
-                          ),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
                         ),
                       ),
                       validator: (value) {
@@ -192,7 +190,7 @@ class _LoginState extends State<Login> {
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white
+                                  color: Colors.white,
                                 ),
                               ),
                       ),
@@ -207,9 +205,7 @@ class _LoginState extends State<Login> {
                 children: [
                   Text(
                     "Don't have an account? ",
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                    ),
+                    style: TextStyle(color: Colors.grey[600]),
                   ),
                   GestureDetector(
                     onTap: _navigateToSignup,
