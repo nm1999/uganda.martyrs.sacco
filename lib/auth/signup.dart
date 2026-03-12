@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 class Signup extends StatefulWidget {
@@ -29,6 +30,11 @@ class _SignupState extends State<Signup> {
       setState(() {
         _qrController.text = result;
       });
+      Get.snackbar(
+        'QR Code Scanned',
+        'Data: $result',
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 
