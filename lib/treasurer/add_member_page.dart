@@ -1,21 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:convert';
 import 'package:ugandamartyrssacco/treasurer/dashboard.dart';
+import 'package:ugandamartyrssacco/treasurer/generateQrCode.dart';
 
-class AddContribution extends StatefulWidget {
-  const AddContribution({super.key});
+class AddMemberPage extends StatefulWidget {
+  const AddMemberPage({super.key});
 
   @override
-  State<AddContribution> createState() => _AddContributionState();
+  State<AddMemberPage> createState() => _AddMemberPageState();
 }
 
-class _AddContributionState extends State<AddContribution> {
-  final TextEditingController _amountController = TextEditingController();
+class _AddMemberPageState extends State<AddMemberPage> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _surnameController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    _surnameController.dispose();
+    _addressController.dispose();
+    _phoneNumberController.dispose();
+    super.dispose();
+  }
+
+  void _registerMember() {
+    if (_formKey.currentState!.validate()) {
+      // Create member data as JSON
+      final memberData = {
+        'firstName': _firstNameController.text,
+        'surname': _surnameController.text,
+        'address': _addressController.text,
+        'phoneNumber': _phoneNumberController.text,
+      };
+
+      // Convert to JSON string
+      final jsonString = jsonEncode(memberData);
+
+      // Navigate to QR code generation with JSON data
+      Get.to(GenerateQrCode(data: jsonString));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(toolbarHeight: 10, backgroundColor: Colors.blue),
+      appBar: AppBar(
+        toolbarHeight: 10,
+        backgroundColor: Colors.blue,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -34,7 +70,7 @@ class _AddContributionState extends State<AddContribution> {
                     icon: Icon(Icons.arrow_back),
                   ),
                   Text(
-                    "Deposit individual savings",
+                    "Register New Member",
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.black,
@@ -43,49 +79,126 @@ class _AddContributionState extends State<AddContribution> {
                   ),
                 ],
               ),
-
               SizedBox(height: 30),
-              Text(
-                "Name: Nyanzi Mathias",
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
-              ),
-              Text(
-                "Available amount : UGX 50000",
-                style: TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                controller: _amountController,
-                keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
-                  labelText: 'Amount',
-                  prefixIcon: const Icon(Icons.money),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.grey[300]!),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter amount';
-                  }
-                  if (value.length < 1000) {
-                    return 'You cannot save money less than 1000 shillings';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 15),
-              SizedBox(
-                width: 400,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Get.to(TreasurerDashboard());
-                  },
-                  child: Text("Save"),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    // First Name Field
+                    TextFormField(
+                      controller: _firstNameController,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        labelText: 'First Name',
+                        prefixIcon: const Icon(Icons.person),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter first name';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 15),
+                    // Surname Field
+                    TextFormField(
+                      controller: _surnameController,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        labelText: 'Surname',
+                        prefixIcon: const Icon(Icons.person),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter surname';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 15),
+                    // Address Field
+                    TextFormField(
+                      controller: _addressController,
+                      keyboardType: TextInputType.text,
+                      maxLines: 3,
+                      decoration: InputDecoration(
+                        labelText: 'Address',
+                        prefixIcon: const Icon(Icons.location_on),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter address';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 15),
+                    // Phone Number Field
+                    TextFormField(
+                      controller: _phoneNumberController,
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                        labelText: 'Phone Number',
+                        prefixIcon: const Icon(Icons.phone),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter phone number';
+                        }
+                        if (value.length < 10) {
+                          return 'Please enter a valid phone number';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 30),
+                    // Register Button
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: _registerMember,
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          backgroundColor: Colors.blue,
+                        ),
+                        child: Text(
+                          "Generate QR Code",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
