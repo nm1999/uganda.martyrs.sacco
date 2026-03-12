@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ugandamartyrssacco/treasurer/add_member_page.dart';
 
 class TreasurerDashboard extends StatefulWidget {
   const TreasurerDashboard({super.key});
@@ -37,9 +39,9 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
             Text(
               'Financial Overview',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize:16
-                  ),
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
             const SizedBox(height: 16),
 
@@ -72,9 +74,9 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
             Text(
               'Membership & Loans',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize:16
-                  ),
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
             const SizedBox(height: 16),
 
@@ -106,9 +108,9 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
             Text(
               'Quick Actions',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16
-                  ),
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
             const SizedBox(height: 16),
 
@@ -116,9 +118,7 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
               label: 'Record Contribution',
               icon: Icons.add_circle_outline,
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Record Contribution')),
-                );
+                Get.to(AddContribution());
               },
             ),
             const SizedBox(height: 12),
@@ -138,9 +138,9 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
               label: 'Manage Loans',
               icon: Icons.card_giftcard,
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Manage Loans')),
-                );
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(const SnackBar(content: Text('Manage Loans')));
               },
             ),
             const SizedBox(height: 12),
@@ -178,17 +178,17 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
           Text(
             'Welcome, Treasurer',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18
-                ),
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
           ),
           const SizedBox(height: 8),
           Text(
             'Manage and monitor your SACCO finances',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.white70,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: Colors.white70),
           ),
         ],
       ),
@@ -217,10 +217,7 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
       child: Row(
         children: [
           Container(
-            decoration: BoxDecoration(
-              
-              borderRadius: BorderRadius.circular(12),
-            ),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
             padding: const EdgeInsets.all(12),
             child: Icon(icon, color: color, size: 28),
           ),
@@ -231,17 +228,17 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
               children: [
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey[600],
-                      ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'UGX ${_formatCurrency(amount)}',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: color,
-                      ),
+                    fontWeight: FontWeight.bold,
+                    color: color,
+                  ),
                 ),
               ],
             ),
@@ -274,27 +271,24 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            decoration: BoxDecoration(
-              
-              borderRadius: BorderRadius.circular(8),
-            ),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
             padding: const EdgeInsets.all(8),
             child: Icon(icon, color: color, size: 24),
           ),
           const SizedBox(height: 12),
           Text(
             title,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.grey[600],
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
           ),
           const SizedBox(height: 8),
           Text(
             value,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: color,
-                ),
+              fontWeight: FontWeight.bold,
+              color: color,
+            ),
           ),
         ],
       ),
@@ -313,10 +307,7 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
         icon: Icon(icon),
         label: Text(
           label,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 14),
@@ -330,9 +321,8 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
 
   String _formatCurrency(double amount) {
     // Format large numbers with thousands separator
-    return amount.toStringAsFixed(0).replaceAllMapped(
-          RegExp(r'\B(?=(\d{3})+(?!\d))'),
-          (match) => ',',
-        );
+    return amount
+        .toStringAsFixed(0)
+        .replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (match) => ',');
   }
 }
