@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ugandamartyrssacco/treasurer/add_member_page.dart';
 
+import '../auth/login.dart';
+
 class TreasurerDashboard extends StatefulWidget {
   const TreasurerDashboard({super.key});
 
@@ -152,6 +154,15 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Generate Reports')),
                 );
+              },
+            ),
+            const SizedBox(height: 12),
+
+            _buildQuickActionButton(
+              label: 'logout',
+              icon: Icons.logout,
+              onPressed: () {
+                Get.to(Login());
               },
             ),
             const SizedBox(height: 24),
