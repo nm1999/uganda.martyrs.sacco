@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ugandamartyrssacco/treasurer/add_savings.dart';
 import 'add_member_page.dart';
 
 import '../auth/login.dart';
@@ -120,7 +121,7 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
               label: 'Record Contribution',
               icon: Icons.add_circle_outline,
               onPressed: () {
-                Get.to(AddMemberPage());
+                Get.to(AddSavings());
               },
             ),
             const SizedBox(height: 12),
@@ -156,6 +157,16 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
                 );
               },
             ),
+            const SizedBox(height: 12),
+
+            _buildQuickActionButton(
+              label: 'Add New Member',
+              icon: Icons.person,
+              onPressed: () {
+                Get.to(AddMemberPage());
+              },
+            ),
+            const SizedBox(height: 24),
             const SizedBox(height: 12),
 
             _buildQuickActionButton(

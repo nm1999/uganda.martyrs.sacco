@@ -7,8 +7,9 @@ import 'package:ugandamartyrssacco/treasurer/dashboard.dart';
 
 class GenerateQrCode extends StatefulWidget {
   final String data;
+  final String title;
 
-  const GenerateQrCode({super.key, required this.data});
+  const GenerateQrCode({super.key, required this.data, required this.title});
 
   @override
   State<GenerateQrCode> createState() => _GenerateQrCodeState();
@@ -30,8 +31,8 @@ class _GenerateQrCodeState extends State<GenerateQrCode> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text(
-          'Member QR Code',
+        title: Text(
+         widget.title,
           style: TextStyle(fontWeight: FontWeight.bold),
           
         ),
