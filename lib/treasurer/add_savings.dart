@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ugandamartyrssacco/treasurer/generateQrCode.dart';
 
 class AddSavings extends StatefulWidget {
   const AddSavings({super.key});
@@ -64,7 +66,9 @@ class _AddSavingsState extends State<AddSavings> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                    Get.to(GenerateQrCode(data: "", title: "Scan QR code",));
+                },
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(vertical: 15),
                   backgroundColor: Colors.blue,

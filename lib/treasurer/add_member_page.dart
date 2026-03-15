@@ -41,7 +41,7 @@ class _AddMemberPageState extends State<AddMemberPage> {
       final jsonString = jsonEncode(memberData);
 
       // Navigate to QR code generation with JSON data
-      Get.to(GenerateQrCode(data: jsonString));
+      Get.to(GenerateQrCode(data: jsonString, title: 'Member QR Code',));
     }
   }
 
