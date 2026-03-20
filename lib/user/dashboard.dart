@@ -82,6 +82,7 @@ class _UserDashboardState extends State<UserDashboard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            TextButton(onPressed: (){},child:Text("Update record")),
             // Welcome section
             _buildWelcomeSection(),
             const SizedBox(height: 24),
