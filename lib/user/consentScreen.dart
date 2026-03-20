@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:get/get.dart';
 
+import 'dashboard.dart';
+
 class ConsentScreen extends StatefulWidget {
   final String? userDataJson;
 
@@ -73,9 +75,7 @@ class _ConsentScreenState extends State<ConsentScreen> {
         print('Phone Number: ${_phoneNumberController.text}');
         print('Consent: ${_consentController.text}');
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Consent submitted successfully!')),
-        );
+        Get.to(UserDashboard());
       } catch (e) {
         ScaffoldMessenger.of(
           context,

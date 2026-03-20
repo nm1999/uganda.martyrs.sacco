@@ -34,9 +34,6 @@ class _LoginState extends State<Login> {
           _isLoading = false;
         });
         Get.to(TreasurerDashboard());
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('Login successful!')));
       }
     }
     setState(() {

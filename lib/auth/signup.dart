@@ -14,13 +14,12 @@ class Signup extends StatefulWidget {
 class _SignupState extends State<Signup> {
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _qrController = TextEditingController();
 
   @override
   void dispose() {
     _phoneController.dispose();
     _passwordController.dispose();
-    _qrController.dispose();
+
     super.dispose();
   }
 
@@ -29,13 +28,10 @@ class _SignupState extends State<Signup> {
       context,
     ).push<String>(MaterialPageRoute(builder: (_) => const QRScannerPage()));
     if (result != null && result.isNotEmpty) {
-      setState(() {
-        _qrController.text = result;
-      });
-      Get.snackbar(
-        'QR Code Scanned',
-        'Data: $result',
-        snackPosition: SnackPosition.BOTTOM,
+      Get.to(ConsentScreen(userDataJson: result));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Focus the QR Code on camera')),
       );
     }
   }
@@ -136,11 +132,10 @@ class _QRScannerPageState extends State<QRScannerPage> {
           final String? code = barcode.rawValue;
           if (code != null && _isScanning) {
             _isScanning = false;
-            Get.to(ConsentScreen(userDataJson: code));
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Something went wrong, Try again')),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(code)));
+            Navigator.of(context).pop(code);
           }
         },
       ),
