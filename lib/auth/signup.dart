@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
+import '../user/consentScreen.dart';
+
 class Signup extends StatefulWidget {
   const Signup({super.key});
 
@@ -134,7 +136,11 @@ class _QRScannerPageState extends State<QRScannerPage> {
           final String? code = barcode.rawValue;
           if (code != null && _isScanning) {
             _isScanning = false;
-            Navigator.of(context).pop(code);
+            Get.to(ConsentScreen(userDataJson: code));
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Something went wrong, Try again')),
+            );
           }
         },
       ),
