@@ -126,38 +126,38 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
             ),
             const SizedBox(height: 12),
 
-            _buildQuickActionButton(
-              label: 'View All Transactions',
-              icon: Icons.receipt_long,
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('View All Transactions')),
-                );
-              },
-            ),
-            const SizedBox(height: 12),
+            // _buildQuickActionButton(
+            //   label: 'View All Transactions',
+            //   icon: Icons.receipt_long,
+            //   onPressed: () {
+            //     ScaffoldMessenger.of(context).showSnackBar(
+            //       const SnackBar(content: Text('View All Transactions')),
+            //     );
+            //   },
+            // ),
+            // const SizedBox(height: 12),
 
-            _buildQuickActionButton(
-              label: 'Manage Loans',
-              icon: Icons.card_giftcard,
-              onPressed: () {
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(const SnackBar(content: Text('Manage Loans')));
-              },
-            ),
-            const SizedBox(height: 12),
+            // _buildQuickActionButton(
+            //   label: 'Manage Loans',
+            //   icon: Icons.card_giftcard,
+            //   onPressed: () {
+            //     ScaffoldMessenger.of(
+            //       context,
+            //     ).showSnackBar(const SnackBar(content: Text('Manage Loans')));
+            //   },
+            // ),
+            // const SizedBox(height: 12),
 
-            _buildQuickActionButton(
-              label: 'Generate Reports',
-              icon: Icons.assessment,
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Generate Reports')),
-                );
-              },
-            ),
-            const SizedBox(height: 12),
+            // _buildQuickActionButton(
+            //   label: 'Generate Reports',
+            //   icon: Icons.assessment,
+            //   onPressed: () {
+            //     ScaffoldMessenger.of(context).showSnackBar(
+            //       const SnackBar(content: Text('Generate Reports')),
+            //     );
+            //   },
+            // ),
+            // const SizedBox(height: 12),
 
             _buildQuickActionButton(
               label: 'Add New Member',
