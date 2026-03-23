@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'profile.dart';
 
 class UserDashboard extends StatefulWidget {
   const UserDashboard({super.key});
@@ -82,7 +84,7 @@ class _UserDashboardState extends State<UserDashboard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextButton(onPressed: (){},child:Text("Update record")),
+            TextButton(onPressed: () {}, child: Text("Update record")),
             // Welcome section
             _buildWelcomeSection(),
             const SizedBox(height: 24),
@@ -94,9 +96,9 @@ class _UserDashboardState extends State<UserDashboard> {
             // Savings Records Section
             Text(
               'Savings Records',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
 
@@ -107,9 +109,9 @@ class _UserDashboardState extends State<UserDashboard> {
             // Quick actions
             Text(
               'Quick Actions',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
 
@@ -117,9 +119,9 @@ class _UserDashboardState extends State<UserDashboard> {
               label: 'Make a Deposit',
               icon: Icons.add_circle_outline,
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Make a Deposit')),
-                );
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(const SnackBar(content: Text('Make a Deposit')));
               },
             ),
             const SizedBox(height: 12),
@@ -128,9 +130,9 @@ class _UserDashboardState extends State<UserDashboard> {
               label: 'Request Loan',
               icon: Icons.request_page,
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Request Loan')),
-                );
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(const SnackBar(content: Text('Request Loan')));
               },
             ),
             const SizedBox(height: 12),
@@ -142,6 +144,15 @@ class _UserDashboardState extends State<UserDashboard> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('View Statements')),
                 );
+              },
+            ),
+            const SizedBox(height: 12),
+
+            _buildQuickActionButton(
+              label: 'View Profile',
+              icon: Icons.person,
+              onPressed: () {
+                Get.to(() => const UserProfile());
               },
             ),
             const SizedBox(height: 24),
@@ -168,16 +179,16 @@ class _UserDashboardState extends State<UserDashboard> {
           Text(
             'Welcome back!',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           const SizedBox(height: 8),
           Text(
             'Track your savings and manage your account',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.white70,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: Colors.white70),
           ),
         ],
       ),
@@ -214,25 +225,25 @@ class _UserDashboardState extends State<UserDashboard> {
           Text(
             'Total Savings',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                ),
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
+            ),
           ),
           const SizedBox(height: 8),
           Text(
             'UGX ${_formatCurrency(totalSavings)}',
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 32,
-                ),
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 32,
+            ),
           ),
           const SizedBox(height: 8),
           Text(
             'Keep saving to reach your goals!',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.white70,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: Colors.white70),
           ),
         ],
       ),
@@ -268,12 +279,7 @@ class _UserDashboardState extends State<UserDashboard> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.grey[100]!,
-            width: 1,
-          ),
-        ),
+        border: Border(bottom: BorderSide(color: Colors.grey[100]!, width: 1)),
       ),
       child: Row(
         children: [
@@ -283,11 +289,7 @@ class _UserDashboardState extends State<UserDashboard> {
               borderRadius: BorderRadius.circular(8),
             ),
             padding: const EdgeInsets.all(8),
-            child: const Icon(
-              Icons.savings,
-              color: Colors.green,
-              size: 20,
-            ),
+            child: const Icon(Icons.savings, color: Colors.green, size: 20),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -296,23 +298,23 @@ class _UserDashboardState extends State<UserDashboard> {
               children: [
                 Text(
                   record.type,
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   record.description,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Colors.grey[600],
-                      ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   '${record.date.day}/${record.date.month}/${record.date.year}',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Colors.grey[500],
-                      ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodySmall?.copyWith(color: Colors.grey[500]),
                 ),
               ],
             ),
@@ -320,9 +322,9 @@ class _UserDashboardState extends State<UserDashboard> {
           Text(
             '+UGX ${_formatCurrency(record.amount)}',
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green[700],
-                ),
+              fontWeight: FontWeight.bold,
+              color: Colors.green[700],
+            ),
           ),
         ],
       ),
@@ -341,10 +343,7 @@ class _UserDashboardState extends State<UserDashboard> {
         icon: Icon(icon),
         label: Text(
           label,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 14),
@@ -358,10 +357,9 @@ class _UserDashboardState extends State<UserDashboard> {
 
   String _formatCurrency(double amount) {
     // Format large numbers with thousands separator
-    return amount.toStringAsFixed(0).replaceAllMapped(
-          RegExp(r'\B(?=(\d{3})+(?!\d))'),
-          (match) => ',',
-        );
+    return amount
+        .toStringAsFixed(0)
+        .replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (match) => ',');
   }
 }
 
