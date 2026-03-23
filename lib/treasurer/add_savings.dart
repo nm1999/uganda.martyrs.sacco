@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ugandamartyrssacco/treasurer/generateQrCode.dart';
 
+import '../db/db_services.dart';
+
 class AddSavings extends StatefulWidget {
   const AddSavings({super.key});
 
@@ -15,6 +17,7 @@ class _AddSavingsState extends State<AddSavings> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _searchController = TextEditingController();
+  DatabaseService db = DatabaseService();
 
   String selectedName = '';
   List<String> members = [
@@ -30,6 +33,21 @@ class _AddSavingsState extends State<AddSavings> {
   void initState() {
     super.initState();
     filteredMembers = members;
+
+    db.getMembers().then((List<Map<String, dynamic>> value) {
+      setState(() {
+        members = value
+            .map((row) {
+              final first = (row['firstname'] ?? '').toString().trim();
+              final last = (row['surname'] ?? '').toString().trim();
+              final full = [first, last].where((part) => part.isNotEmpty).join(' ');
+              return full;
+            })
+            .where((name) => name.isNotEmpty)
+            .toList();
+        filteredMembers = members;
+      });
+    });
   }
 
   void _filterMembers(String query) {
