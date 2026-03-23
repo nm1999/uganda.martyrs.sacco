@@ -15,22 +15,16 @@ class ConsentScreen extends StatefulWidget {
 
 class _ConsentScreenState extends State<ConsentScreen> {
   final _formKey = GlobalKey<FormState>();
-  late TextEditingController _firstNameController;
-  late TextEditingController _lastNameController;
-  late TextEditingController _phoneNumberController;
-  late TextEditingController _addressController;
-  late TextEditingController _consentController;
+  late TextEditingController _firstNameController = TextEditingController();
+  late TextEditingController _lastNameController = TextEditingController();
+  late TextEditingController _phoneNumberController = TextEditingController();
+  late TextEditingController _addressController = TextEditingController();
+  late TextEditingController _consentController = TextEditingController();
   bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    _firstNameController = TextEditingController();
-    _lastNameController = TextEditingController();
-    _phoneNumberController = TextEditingController();
-    _consentController = TextEditingController();
-
-    // Parse and populate user data if provided
     if (widget.userDataJson != null && widget.userDataJson!.isNotEmpty) {
       _populateUserData(widget.userDataJson!);
     }
@@ -45,9 +39,7 @@ class _ConsentScreenState extends State<ConsentScreen> {
       _phoneNumberController.text = userData['phoneNumber'] ?? '';
       _addressController.text = userData['address'] ?? '';
     } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error parsing user data: $e')));
+      Get.snackbar('Error occured','Error parsing user data: ${e.toString()}');
     }
   }
 
@@ -69,12 +61,6 @@ class _ConsentScreenState extends State<ConsentScreen> {
 
       // Here you can handle the form submission
       try {
-        // Process consent and user data
-        print('First Name: ${_firstNameController.text}');
-        print('Last Name: ${_lastNameController.text}');
-        print('Phone Number: ${_phoneNumberController.text}');
-        print('Consent: ${_consentController.text}');
-
         Get.to(UserDashboard());
       } catch (e) {
         ScaffoldMessenger.of(
