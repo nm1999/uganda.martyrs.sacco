@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-
 import '../user/consentScreen.dart';
 
 class Signup extends StatefulWidget {
@@ -30,9 +29,7 @@ class _SignupState extends State<Signup> {
     if (result != null && result.isNotEmpty) {
       Get.to(ConsentScreen(userDataJson: result));
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Focus the QR Code on camera')),
-      );
+      Get.snackbar("Error Occured","Something went wrong try again");
     }
   }
 
@@ -132,9 +129,6 @@ class _QRScannerPageState extends State<QRScannerPage> {
           final String? code = barcode.rawValue;
           if (code != null && _isScanning) {
             _isScanning = false;
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(code)));
             Navigator.of(context).pop(code);
           }
         },

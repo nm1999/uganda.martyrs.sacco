@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:ugandamartyrssacco/treasurer/dashboard.dart';
 import 'package:ugandamartyrssacco/treasurer/generateQrCode.dart';
 
+import '../db/db_services.dart';
+
 class AddMemberPage extends StatefulWidget {
   const AddMemberPage({super.key});
 
@@ -17,7 +19,7 @@ class _AddMemberPageState extends State<AddMemberPage> {
   final TextEditingController _surnameController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
-
+  DatabaseService db = DatabaseService();
   @override
   void dispose() {
     _firstNameController.dispose();
@@ -40,18 +42,27 @@ class _AddMemberPageState extends State<AddMemberPage> {
       // Convert to JSON string
       final jsonString = jsonEncode(memberData);
 
-      // Navigate to QR code generation with JSON data
-      Get.to(GenerateQrCode(data: jsonString, title: 'Member QR Code',));
+      //save data to sqlite before routing
+      db
+          .insertMember(
+            _firstNameController.text,
+            _surnameController.text,
+            _addressController.text,
+            _phoneNumberController.text,
+          )
+          .then((value) {
+            Get.to(GenerateQrCode(data: jsonString, title: 'Member QR Code'));
+          })
+          .catchError((error) {
+            Get.snackbar("Error occured", error.toString());
+          });
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 10,
-        backgroundColor: Colors.blue,
-      ),
+      appBar: AppBar(toolbarHeight: 10, backgroundColor: Colors.blue),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -191,10 +202,7 @@ class _AddMemberPageState extends State<AddMemberPage> {
                         ),
                         child: Text(
                           "Generate QR Code",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
+                          style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                       ),
                     ),

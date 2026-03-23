@@ -67,12 +67,13 @@ class _UserDashboardState extends State<UserDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Dashboard'),
+        title: const Text('My Dashboard',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
         elevation: 0,
-        backgroundColor: Colors.green[700],
+        backgroundColor: Colors.blue[700],
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications),
+            icon: const Icon(Icons.notifications,color: Colors.white,),
             onPressed: () {
               // Handle notifications
             },
@@ -84,11 +85,6 @@ class _UserDashboardState extends State<UserDashboard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextButton(onPressed: () {}, child: Text("Update record")),
-            // Welcome section
-            _buildWelcomeSection(),
-            const SizedBox(height: 24),
-
             // Total Savings Card - Prominent at the top
             _buildTotalSavingsCard(),
             const SizedBox(height: 24),
@@ -114,17 +110,6 @@ class _UserDashboardState extends State<UserDashboard> {
               ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
-
-            _buildQuickActionButton(
-              label: 'Make a Deposit',
-              icon: Icons.add_circle_outline,
-              onPressed: () {
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(const SnackBar(content: Text('Make a Deposit')));
-              },
-            ),
-            const SizedBox(height: 12),
 
             _buildQuickActionButton(
               label: 'Request Loan',
@@ -199,7 +184,7 @@ class _UserDashboardState extends State<UserDashboard> {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.green[600]!, Colors.green[400]!],
+          colors: [Colors.green[600]!, Colors.blue[400]!],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
