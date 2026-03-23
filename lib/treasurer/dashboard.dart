@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ugandamartyrssacco/db/db_services.dart';
 import 'package:ugandamartyrssacco/treasurer/add_savings.dart';
 import 'add_member_page.dart';
 
@@ -19,6 +20,18 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
   final double monthlyCollections = 85000;
   final int activeLoanRequests = 12;
   final double accountBalance = 950000;
+  DatabaseService db = DatabaseService();
+  List<Map<String, dynamic>> members = [];
+
+  @override
+  void initState() {
+    super.initState();
+    db.getMembers().then((value) {
+      setState(() {
+        members = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +102,7 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
                 Expanded(
                   child: _buildStatCard(
                     title: 'Registered Members',
-                    value: registeredMembers.toString(),
+                    value: members.length.toString(),
                     icon: Icons.people,
                     color: Colors.purple,
                   ),
@@ -158,7 +171,6 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
             //   },
             // ),
             // const SizedBox(height: 12),
-
             _buildQuickActionButton(
               label: 'Add New Member',
               icon: Icons.person,
