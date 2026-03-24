@@ -20,13 +20,7 @@ class _AddSavingsState extends State<AddSavings> {
   DatabaseService db = DatabaseService();
 
   String selectedName = '';
-  List<String> members = [
-    'John Doe',
-    'Jane Smith',
-    'Alice Johnson',
-    'Bob Brown',
-    'Charlie Wilson',
-  ];
+  List<String> members = [];
   List<String> filteredMembers = [];
 
   @override
@@ -40,7 +34,10 @@ class _AddSavingsState extends State<AddSavings> {
             .map((row) {
               final first = (row['firstname'] ?? '').toString().trim();
               final last = (row['surname'] ?? '').toString().trim();
-              final full = [first, last].where((part) => part.isNotEmpty).join(' ');
+              final full = [
+                first,
+                last,
+              ].where((part) => part.isNotEmpty).join(' ');
               return full;
             })
             .where((name) => name.isNotEmpty)
@@ -119,13 +116,39 @@ class _AddSavingsState extends State<AddSavings> {
     );
   }
 
-  _saveRecord() {
-    Map<String, dynamic> formdata = {
-      "name": _nameController.text,
-      "amount": _amountController.text,
-    };
+  void _saveRecord() async {
+    int userId = 1;
+    if (_nameController.text.isNotEmpty && _amountController.text.isNotEmpty) {
+      //begin by saving the new savings
+      int result = await db.insertSavings(
+        userId,
+        double.parse(_amountController.text),
+        DateTime.now().toString(),
+      );
+      if (result > 0) {
+        // fetch savings
+        List<Map<String, dynamic>> savings = await db.getSavings();
 
-    Get.to(GenerateQrCode(data: jsonEncode(formdata), title: "Scan QR code"));
+        // fetch members
+        List<Map<String, dynamic>> members = await db.getMembers();
+
+        Map<String, dynamic> formdata = {
+          "user_id": userId,
+          "savings": savings,
+          "members": members,
+        };
+
+        Get.to(
+          GenerateQrCode(
+            data: jsonEncode(formdata),
+            title: "Scan QR code to Update Savings",
+          ),
+        );
+      } else {
+        Get.snackbar("Error", "Failed to save savings record");
+        return;
+      }
+    }
   }
 
   @override
