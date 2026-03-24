@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -49,7 +48,7 @@ class _GenerateQrCodeState extends State<GenerateQrCode> {
                 Text(
                   "This Code belongs to ${decodedData?['firstName']} ${decodedData?['surname']} . Scan this code to be logged in as a member on the members app",
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Container(
                   padding: const EdgeInsets.all(20),
                   alignment: Alignment.center,
@@ -85,7 +84,7 @@ class _GenerateQrCodeState extends State<GenerateQrCode> {
                             Get.to(TreasurerDashboard());
                           },
                           icon: const Icon(Icons.arrow_back),
-                          label: const Text('Back'),
+                          label: const Text('Back to Home'),
                         ),
                       ),
                     ],
