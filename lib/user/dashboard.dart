@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../common/QRScannerPage.dart';
+import 'consentScreen.dart';
 import 'profile.dart';
 
 class UserDashboard extends StatefulWidget {
@@ -67,13 +69,16 @@ class _UserDashboardState extends State<UserDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Dashboard',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+        title: const Text(
+          'My Dashboard',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
         elevation: 0,
         backgroundColor: Colors.blue[700],
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications,color: Colors.white,),
+            icon: const Icon(Icons.notifications, color: Colors.white),
             onPressed: () {
               // Handle notifications
             },
@@ -138,6 +143,28 @@ class _UserDashboardState extends State<UserDashboard> {
               icon: Icons.person,
               onPressed: () {
                 Get.to(() => const UserProfile());
+              },
+            ),
+            const SizedBox(height: 12),
+
+            _buildQuickActionButton(
+              label: 'Update Savings Record',
+              icon: Icons.qr_code_scanner,
+              onPressed: () async {
+                final result = await Navigator.of(context).push<String>(
+                  MaterialPageRoute(builder: (_) => const QRScannerPage()),
+                );
+                if (result != null && result.isNotEmpty) {
+                  
+                  
+                  
+                  Get.to(ConsentScreen(userDataJson: result));
+                } else {
+                  Get.snackbar(
+                    "Error Occured",
+                    "Something went wrong try again",
+                  );
+                }
               },
             ),
             const SizedBox(height: 24),

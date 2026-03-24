@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:ugandamartyrssacco/treasurer/dashboard.dart';
-import 'package:ugandamartyrssacco/treasurer/generateQrCode.dart';
+import 'package:ugandamartyrssacco/common/generateQrCode.dart';
 
 import '../db/db_services.dart';
 
