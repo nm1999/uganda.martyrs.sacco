@@ -58,7 +58,7 @@ class SharedPrefService {
   }
 
   // Save JSON data
-  static Future<bool> saveJsonData(Map<String, dynamic> data) async {
+  Future<bool> saveJsonData(Map<String, dynamic> data) async {
     final prefs = await SharedPreferences.getInstance();
     final jsonString = jsonEncode(data);
     return prefs.setString(_jsonData, jsonString);
