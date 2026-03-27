@@ -1,7 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ugandamartyrssacco/common/sharedPref.dart';
 import '../common/QRScannerPage.dart';
-import 'consentScreen.dart';
 import 'profile.dart';
 
 class UserDashboard extends StatefulWidget {
@@ -13,6 +15,7 @@ class UserDashboard extends StatefulWidget {
 
 class _UserDashboardState extends State<UserDashboard> {
   // Mock data - Replace with real data from your backend
+  SharedPrefService sharedPref = SharedPrefService();
   final double totalSavings = 450000;
   final List<SavingsRecord> savingsRecords = [
     SavingsRecord(
@@ -155,10 +158,24 @@ class _UserDashboardState extends State<UserDashboard> {
                   MaterialPageRoute(builder: (_) => const QRScannerPage()),
                 );
                 if (result != null && result.isNotEmpty) {
-                  
-                  
-                  
-                  Get.to(ConsentScreen(userDataJson: result));
+                  //check for the json string
+                  Map<String, dynamic> data = jsonDecode(result);
+                  if (data.containsKey("user_id") &&
+                      data.containsKey("members")) {
+                    // save data
+                    bool isSaved = await sharedPref.saveJsonData(data);
+                    if (isSaved) {
+                      Get.snackbar(
+                        "Success",
+                        "Savings record updated successfully",
+                      );
+                    } else {
+                      Get.snackbar(
+                        "Error Occured",
+                        "Failed to save savings record",
+                      );
+                    }
+                  }
                 } else {
                   Get.snackbar(
                     "Error Occured",

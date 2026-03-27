@@ -8,6 +8,7 @@ class SharedPrefService {
   static const String _contact = 'contact';
   static const String _jsonData = 'json_data';
   static const String _members = 'members';
+  static const String _savings = 'savings';
 
   // Save user ID
   static Future<bool> saveUserId(int id) async {
@@ -58,7 +59,7 @@ class SharedPrefService {
   }
 
   // Save JSON data
-  static Future<bool> saveJsonData(Map<String, dynamic> data) async {
+  Future<bool> saveJsonData(Map<String, dynamic> data) async {
     final prefs = await SharedPreferences.getInstance();
     final jsonString = jsonEncode(data);
     return prefs.setString(_jsonData, jsonString);
