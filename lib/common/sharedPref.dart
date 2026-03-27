@@ -8,7 +8,6 @@ class SharedPrefService {
   static const String _contact = 'contact';
   static const String _jsonData = 'json_data';
   static const String _members = 'members';
-  static const String _savings = 'savings';
 
   // Save user ID
   static Future<bool> saveUserId(int id) async {
