@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ugandamartyrssacco/common/sharedPref.dart';
+import '../auth/login.dart';
 import '../common/QRScannerPage.dart';
 import 'profile.dart';
 
@@ -189,6 +190,7 @@ class _UserDashboardState extends State<UserDashboard> {
               icon: Icons.power_off,
               onPressed: () async {
                 await sharedPref.clearAll();
+                Get.to(Login());
               },
             ),
             const SizedBox(height: 24),

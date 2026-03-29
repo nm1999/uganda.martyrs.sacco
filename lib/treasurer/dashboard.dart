@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ugandamartyrssacco/common/sharedPref.dart';
 import 'package:ugandamartyrssacco/db/db_services.dart';
 import 'package:ugandamartyrssacco/treasurer/add_savings.dart';
 import 'add_member_page.dart';
@@ -22,6 +23,7 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
   final double accountBalance = 950000;
   DatabaseService db = DatabaseService();
   List<Map<String, dynamic>> members = [];
+  SharedPrefService sharedPref = SharedPrefService();
 
   @override
   void initState() {
@@ -184,7 +186,8 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
             _buildQuickActionButton(
               label: 'logout',
               icon: Icons.logout,
-              onPressed: () {
+              onPressed: () async {
+                await sharedPref.clearAll();
                 Get.to(Login());
               },
             ),
