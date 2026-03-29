@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ugandamartyrssacco/common/sharedPref.dart';
+import '../auth/login.dart';
 import '../common/QRScannerPage.dart';
 import 'profile.dart';
 
@@ -14,7 +15,6 @@ class UserDashboard extends StatefulWidget {
 }
 
 class _UserDashboardState extends State<UserDashboard> {
-  // Mock data - Replace with real data from your backend
   SharedPrefService sharedPref = SharedPrefService();
   final double totalSavings = 450000;
   final List<SavingsRecord> savingsRecords = [
@@ -182,6 +182,15 @@ class _UserDashboardState extends State<UserDashboard> {
                     "Something went wrong try again",
                   );
                 }
+              },
+            ),
+            const SizedBox(height: 12),
+            _buildQuickActionButton(
+              label: 'Logout',
+              icon: Icons.power_off,
+              onPressed: () async {
+                await sharedPref.clearAll();
+                Get.to(Login());
               },
             ),
             const SizedBox(height: 24),

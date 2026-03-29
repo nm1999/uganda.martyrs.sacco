@@ -93,7 +93,7 @@ class SharedPrefService {
   }
 
   // Clear all user data
-  static Future<bool> clearAll() async {
+  Future<bool> clearAll() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.clear();
   }
