@@ -14,7 +14,6 @@ class UserDashboard extends StatefulWidget {
 }
 
 class _UserDashboardState extends State<UserDashboard> {
-  // Mock data - Replace with real data from your backend
   SharedPrefService sharedPref = SharedPrefService();
   final double totalSavings = 450000;
   final List<SavingsRecord> savingsRecords = [
@@ -182,6 +181,14 @@ class _UserDashboardState extends State<UserDashboard> {
                     "Something went wrong try again",
                   );
                 }
+              },
+            ),
+            const SizedBox(height: 12),
+            _buildQuickActionButton(
+              label: 'Logout',
+              icon: Icons.power_off,
+              onPressed: () async {
+                await sharedPref.clearAll();
               },
             ),
             const SizedBox(height: 24),

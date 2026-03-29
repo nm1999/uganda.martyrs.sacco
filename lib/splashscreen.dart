@@ -82,7 +82,7 @@ class _SplashscreenState extends State<Splashscreen>
                   "Uganda Martyrs\nCathedral BANTU SACCO",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 28,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: _colorAnimation.value,
                     letterSpacing: 1.2,
