@@ -32,7 +32,8 @@ class _GenerateQrCodeState extends State<GenerateQrCode> {
         automaticallyImplyLeading: false,
         title: Text(
          widget.title,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold,overflow: TextOverflow.ellipsis),
+          maxLines: 2,
           
         ),
         centerTitle: true,
@@ -47,6 +48,7 @@ class _GenerateQrCodeState extends State<GenerateQrCode> {
               children: [
                 Text(
                   "This Code belongs to ${decodedData?['firstName']} ${decodedData?['surname']} . Scan this code to be logged in as a member on the members app",
+                style:TextStyle()
                 ),
                 const SizedBox(height: 10),
                 Container(
