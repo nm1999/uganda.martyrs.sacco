@@ -34,9 +34,9 @@ class _SignupState extends State<Signup> {
         final jsonData = json.decode(result);
         if (jsonData is Map &&
             jsonData.containsKey('user_id') &&
-            jsonData['user_id'] is int) {
+            jsonData['user_id'] is int && jsonData.containsKey("firstname")) {
           await SharedPrefService.saveUserId(jsonData['user_id']);
-          Get.to(ConsentScreen(userDataJson: result));
+          Get.to(() => ConsentScreen(userDataJson: result));
         } else {
           Get.snackbar("Error Occured", "Invalid QR Code. Please try again.");
         }
