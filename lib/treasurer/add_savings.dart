@@ -21,7 +21,6 @@ class _AddSavingsState extends State<AddSavings> {
 
   String selectedName = '';
   List<String> members = [];
-  List<String> originalList = [];
   List<String> filteredMembers = [];
 
   @override
@@ -30,7 +29,6 @@ class _AddSavingsState extends State<AddSavings> {
     filteredMembers = members;
 
     db.getMembers().then((List<Map<String, dynamic>> value) {
-        originalList = value.cast<String>().toList();
       setState(() {
         members = value
             .map((row) {
