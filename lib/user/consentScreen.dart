@@ -39,7 +39,7 @@ class _ConsentScreenState extends State<ConsentScreen> {
       _phoneNumberController.text = userData['phoneNumber'] ?? '';
       _addressController.text = userData['address'] ?? '';
     } catch (e) {
-      Get.snackbar('Error occured','Error parsing user data: ${e.toString()}');
+      Get.snackbar('Error occured', 'Error parsing user data: ${e.toString()}');
     }
   }
 
@@ -54,24 +54,7 @@ class _ConsentScreenState extends State<ConsentScreen> {
   }
 
   void _handleSubmit() {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        _isLoading = true;
-      });
-
-      // Here you can handle the form submission
-      try {
-        Get.to(UserDashboard());
-      } catch (e) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Error: $e')));
-      } finally {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
+    Get.to(() => UserDashboard());
   }
 
   @override

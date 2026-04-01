@@ -31,17 +31,7 @@ class _AddMemberPageState extends State<AddMemberPage> {
 
   void _registerMember() {
     if (_formKey.currentState!.validate()) {
-      // Create member data as JSON
-      final memberData = {
-        'firstName': _firstNameController.text,
-        'surname': _surnameController.text,
-        'address': _addressController.text,
-        'phoneNumber': _phoneNumberController.text,
-      };
-
-      // Convert to JSON string
-      final jsonString = jsonEncode(memberData);
-
+    
       //save data to sqlite before routing
       db
           .insertMember(
@@ -51,6 +41,15 @@ class _AddMemberPageState extends State<AddMemberPage> {
             _phoneNumberController.text,
           )
           .then((value) {
+             final memberData = {
+              'user_id': value,
+              'firstName': _firstNameController.text,
+              'surname': _surnameController.text,
+              'address': _addressController.text,
+              'phoneNumber': _phoneNumberController.text,
+            };
+
+            final jsonString = jsonEncode(memberData);
             Get.to(GenerateQrCode(data: jsonString, title: 'Member QR Code'));
           })
           .catchError((error) {

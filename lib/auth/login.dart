@@ -33,7 +33,7 @@ class _LoginState extends State<Login> {
         setState(() {
           _isLoading = false;
         });
-        Get.to(TreasurerDashboard());
+        Get.to(() => TreasurerDashboard());
       }
     }
     setState(() {
@@ -42,7 +42,7 @@ class _LoginState extends State<Login> {
   }
 
   void _navigateToSignup() {
-    Get.to(const Signup());
+    Get.to(() => const Signup());
   }
 
   @override
@@ -151,7 +151,6 @@ class _LoginState extends State<Login> {
                       alignment: Alignment.centerRight,
                       child: TextButton(
                         onPressed: () {
-                          // TODO: Navigate to forgot password page
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('Forgot password functionality'),

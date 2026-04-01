@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:convert';
 
 import '../common/QRScannerPage.dart';
 import '../user/consentScreen.dart';
+import '../common/sharedPref.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -28,9 +30,19 @@ class _SignupState extends State<Signup> {
       context,
     ).push<String>(MaterialPageRoute(builder: (_) => const QRScannerPage()));
     if (result != null && result.isNotEmpty) {
-      Get.to(ConsentScreen(userDataJson: result));
-    } else {
-      Get.snackbar("Error Occured","Something went wrong try again");
+      try {
+        final jsonData = json.decode(result);
+        if (jsonData is Map &&
+            jsonData.containsKey('user_id') &&
+            jsonData['user_id'] is int && jsonData.containsKey("firstname")) {
+          await SharedPrefService.saveUserId(jsonData['user_id']);
+          Get.to(() => ConsentScreen(userDataJson: result));
+        } else {
+          Get.snackbar("Error Occured", "Invalid QR Code. Please try again.");
+        }
+      } catch (e) {
+        Get.snackbar("Error Occured", "Invalid JSON data");
+      }
     }
   }
 

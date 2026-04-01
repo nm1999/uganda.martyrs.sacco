@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'dart:async';
 
 import 'package:ugandamartyrssacco/auth/login.dart';
+import 'package:ugandamartyrssacco/common/sharedPref.dart';
+import 'package:ugandamartyrssacco/user/dashboard.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});
@@ -17,6 +19,16 @@ class _SplashscreenState extends State<Splashscreen>
   late AnimationController _colorController;
   late Animation<double> _scaleAnimation;
   late Animation<Color?> _colorAnimation;
+  SharedPrefService pref = SharedPrefService();
+
+  void isSignUp() async {
+    int? userId = await pref.getUserId();
+    if (!(userId!.isNaN)) {
+      Get.to(() => UserDashboard());
+    } else {
+      Get.to(() => const Login());
+    }
+  }
 
   @override
   void initState() {
@@ -50,7 +62,7 @@ class _SplashscreenState extends State<Splashscreen>
     _scaleController.forward();
     _colorController.forward();
     Timer(Duration(seconds: 3), () {
-      Get.to(() => const Login());
+      isSignUp();
     });
   }
 

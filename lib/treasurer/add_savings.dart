@@ -94,6 +94,7 @@ class _AddSavingsState extends State<AddSavings> {
                                 selectedName = filteredMembers[index];
                                 _nameController.text = selectedName;
                               });
+                              Get.snackbar("title", selectedName);
                               Navigator.of(context).pop();
                             },
                           );
