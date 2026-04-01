@@ -16,7 +16,7 @@ class SharedPrefService {
   }
 
   // Get user ID
-  static Future<int?> getUserId() async {
+  Future<int?> getUserId() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getInt(_userId);
   }
@@ -65,7 +65,7 @@ class SharedPrefService {
   }
 
   // Get JSON data
-  static Future<Map<String, dynamic>?> getJsonData() async {
+  Future<Map<String, dynamic>?> getJsonData() async {
     final prefs = await SharedPreferences.getInstance();
     final jsonString = prefs.getString(_jsonData);
     if (jsonString != null) {
