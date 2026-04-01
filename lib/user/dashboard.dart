@@ -17,56 +17,14 @@ class UserDashboard extends StatefulWidget {
 class _UserDashboardState extends State<UserDashboard> {
   SharedPrefService sharedPref = SharedPrefService();
   final double totalSavings = 450000;
-  final List<SavingsRecord> savingsRecords = [
-    SavingsRecord(
-      date: DateTime(2024, 3, 1),
-      amount: 50000,
-      type: 'Monthly Contribution',
-      description: 'Regular monthly savings',
-    ),
-    SavingsRecord(
-      date: DateTime(2024, 2, 1),
-      amount: 50000,
-      type: 'Monthly Contribution',
-      description: 'Regular monthly savings',
-    ),
-    SavingsRecord(
-      date: DateTime(2024, 1, 15),
-      amount: 25000,
-      type: 'Extra Contribution',
-      description: 'Additional savings deposit',
-    ),
-    SavingsRecord(
-      date: DateTime(2024, 1, 1),
-      amount: 50000,
-      type: 'Monthly Contribution',
-      description: 'Regular monthly savings',
-    ),
-    SavingsRecord(
-      date: DateTime(2023, 12, 1),
-      amount: 50000,
-      type: 'Monthly Contribution',
-      description: 'Regular monthly savings',
-    ),
-    SavingsRecord(
-      date: DateTime(2023, 11, 1),
-      amount: 50000,
-      type: 'Monthly Contribution',
-      description: 'Regular monthly savings',
-    ),
-    SavingsRecord(
-      date: DateTime(2023, 10, 1),
-      amount: 50000,
-      type: 'Monthly Contribution',
-      description: 'Regular monthly savings',
-    ),
-    SavingsRecord(
-      date: DateTime(2023, 9, 1),
-      amount: 50000,
-      type: 'Monthly Contribution',
-      description: 'Regular monthly savings',
-    ),
-  ];
+  bool isLoading = true;
+  List<dynamic> savingsRecords = [];
+
+  @override
+  void initState() {
+    _loadSavings();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,113 +46,118 @@ class _UserDashboardState extends State<UserDashboard> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Total Savings Card - Prominent at the top
-            _buildTotalSavingsCard(),
-            const SizedBox(height: 24),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          _loadSavings();
+        },
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Total Savings Card - Prominent at the top
+              _buildTotalSavingsCard(),
+              const SizedBox(height: 24),
 
-            // Savings Records Section
-            Text(
-              'Savings Records',
-              style: Theme.of(
-                context,
-              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-
-            // Savings records list
-            _buildSavingsRecordsList(),
-            const SizedBox(height: 24),
-
-            // Quick actions
-            Text(
-              'Quick Actions',
-              style: Theme.of(
-                context,
-              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-
-            _buildQuickActionButton(
-              label: 'Request Loan',
-              icon: Icons.request_page,
-              onPressed: () {
-                ScaffoldMessenger.of(
+              // Savings Records Section
+              Text(
+                'Savings Records',
+                style: Theme.of(
                   context,
-                ).showSnackBar(const SnackBar(content: Text('Request Loan')));
-              },
-            ),
-            const SizedBox(height: 12),
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16),
 
-            _buildQuickActionButton(
-              label: 'View Statements',
-              icon: Icons.receipt_long,
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('View Statements')),
-                );
-              },
-            ),
-            const SizedBox(height: 12),
+              // Savings records list
+              _buildSavingsRecordsList(),
+              const SizedBox(height: 24),
 
-            _buildQuickActionButton(
-              label: 'View Profile',
-              icon: Icons.person,
-              onPressed: () {
-                Get.to(() => const UserProfile());
-              },
-            ),
-            const SizedBox(height: 12),
+              // Quick actions
+              Text(
+                'Quick Actions',
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16),
 
-            _buildQuickActionButton(
-              label: 'Update Savings Record',
-              icon: Icons.qr_code_scanner,
-              onPressed: () async {
-                final result = await Navigator.of(context).push<String>(
-                  MaterialPageRoute(builder: (_) => const QRScannerPage()),
-                );
-                if (result != null && result.isNotEmpty) {
-                  //check for the json string
-                  Map<String, dynamic> data = jsonDecode(result);
-                  if (data.containsKey("user_id") &&
-                      data.containsKey("members")) {
-                    // save data
-                    bool isSaved = await sharedPref.saveJsonData(data);
-                    if (isSaved) {
-                      Get.snackbar(
-                        "Success",
-                        "Savings record updated successfully",
-                      );
-                    } else {
-                      Get.snackbar(
-                        "Error Occured",
-                        "Failed to save savings record",
-                      );
-                    }
-                  }
-                } else {
-                  Get.snackbar(
-                    "Error Occured",
-                    "Something went wrong try again",
+              _buildQuickActionButton(
+                label: 'Request Loan',
+                icon: Icons.request_page,
+                onPressed: () {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(const SnackBar(content: Text('Request Loan')));
+                },
+              ),
+              const SizedBox(height: 12),
+
+              _buildQuickActionButton(
+                label: 'View Statements',
+                icon: Icons.receipt_long,
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('View Statements')),
                   );
-                }
-              },
-            ),
-            const SizedBox(height: 12),
-            _buildQuickActionButton(
-              label: 'Logout',
-              icon: Icons.power_off,
-              onPressed: () async {
-                await sharedPref.clearAll();
-                Get.to(Login());
-              },
-            ),
-            const SizedBox(height: 24),
-          ],
+                },
+              ),
+              const SizedBox(height: 12),
+
+              _buildQuickActionButton(
+                label: 'View Profile',
+                icon: Icons.person,
+                onPressed: () {
+                  Get.to(() => const UserProfile());
+                },
+              ),
+              const SizedBox(height: 12),
+
+              _buildQuickActionButton(
+                label: 'Update Savings Record',
+                icon: Icons.qr_code_scanner,
+                onPressed: () async {
+                  final result = await Navigator.of(context).push<String>(
+                    MaterialPageRoute(builder: (_) => const QRScannerPage()),
+                  );
+                  if (result != null && result.isNotEmpty) {
+                    //check for the json string
+                    Map<String, dynamic> data = jsonDecode(result);
+                    if (data.containsKey("user_id") &&
+                        data.containsKey("members")) {
+                      // save data
+                      bool isSaved = await sharedPref.saveJsonData(data);
+                      if (isSaved) {
+                        Get.snackbar(
+                          "Success",
+                          "Savings record updated successfully",
+                        );
+                      } else {
+                        Get.snackbar(
+                          "Error Occured",
+                          "Failed to save savings record",
+                        );
+                      }
+                    }
+                  } else {
+                    Get.snackbar(
+                      "Error Occured",
+                      "Something went wrong try again",
+                    );
+                  }
+                },
+              ),
+              const SizedBox(height: 12),
+              _buildQuickActionButton(
+                label: 'Logout',
+                icon: Icons.power_off,
+                onPressed: () async {
+                  await sharedPref.clearAll();
+                  Get.to(Login());
+                },
+              ),
+              const SizedBox(height: 24),
+            ],
+          ),
         ),
       ),
     );
@@ -268,19 +231,25 @@ class _UserDashboardState extends State<UserDashboard> {
           ),
         ],
       ),
-      child: ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: savingsRecords.length,
-        itemBuilder: (context, index) {
-          final record = savingsRecords[index];
-          return _buildSavingsRecordItem(record);
-        },
-      ),
+      child: savingsRecords.isNotEmpty
+          ? ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: savingsRecords.length,
+              itemBuilder: (context, index) {
+                Map<String, dynamic> record = savingsRecords[index];
+                return _buildSavingsRecordItem(record);
+              },
+            )
+          : Center(
+              child: isLoading
+                  ? CircularProgressIndicator()
+                  : Text("No Record found."),
+            ),
     );
   }
 
-  Widget _buildSavingsRecordItem(SavingsRecord record) {
+  Widget _buildSavingsRecordItem(Map<String, dynamic> record) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -302,21 +271,21 @@ class _UserDashboardState extends State<UserDashboard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  record.type,
+                 " record['type']",
                   style: Theme.of(
                     context,
                   ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  record.description,
+                 " record['description']",
                   style: Theme.of(
                     context,
                   ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${record.date.day}/${record.date.month}/${record.date.year}',
+                  '12/2/2002',
                   style: Theme.of(
                     context,
                   ).textTheme.bodySmall?.copyWith(color: Colors.grey[500]),
@@ -325,7 +294,7 @@ class _UserDashboardState extends State<UserDashboard> {
             ),
           ),
           Text(
-            '+UGX ${_formatCurrency(record.amount)}',
+            '+UGX ${_formatCurrency(record['amount'])}',
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
               fontWeight: FontWeight.bold,
               color: Colors.green[700],
@@ -365,6 +334,22 @@ class _UserDashboardState extends State<UserDashboard> {
     return amount
         .toStringAsFixed(0)
         .replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (match) => ',');
+  }
+
+  void _loadSavings() {
+    sharedPref.getJsonData().then((value) {
+      if (value!.isEmpty) {
+        setState(() {
+          isLoading = false;
+        });
+        return;
+      }
+
+      setState(() {
+        savingsRecords = value['savings'];
+        isLoading = false;
+      });
+    });
   }
 }
 
