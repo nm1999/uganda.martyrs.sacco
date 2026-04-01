@@ -127,6 +127,7 @@ class _UserDashboardState extends State<UserDashboard> {
                       // save data
                       bool isSaved = await sharedPref.saveJsonData(data);
                       if (isSaved) {
+                        _loadSavings();
                         Get.snackbar(
                           "Success",
                           "Savings record updated successfully",
@@ -285,7 +286,7 @@ class _UserDashboardState extends State<UserDashboard> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '12/2/2002',
+                  record['date'],
                   style: Theme.of(
                     context,
                   ).textTheme.bodySmall?.copyWith(color: Colors.grey[500]),
@@ -344,7 +345,7 @@ class _UserDashboardState extends State<UserDashboard> {
         });
         return;
       }
-
+      Get.snackbar("data",value['savings']);
       setState(() {
         savingsRecords = value['savings'];
         isLoading = false;
