@@ -17,7 +17,7 @@ class UserDashboard extends StatefulWidget {
 class _UserDashboardState extends State<UserDashboard> {
   SharedPrefService sharedPref = SharedPrefService();
   final double totalSavings = 450000;
-  bool isLoading = true;
+  bool isLoading = false;
   List<dynamic> savingsRecords = [];
 
   @override
@@ -122,7 +122,7 @@ class _UserDashboardState extends State<UserDashboard> {
                   if (result != null && result.isNotEmpty) {
                     //check for the json string
                     Map<String, dynamic> data = jsonDecode(result);
-
+                    
                     if (data.containsKey("user_id") &&
                         data.containsKey("savings")) {
                       // save data
@@ -130,7 +130,7 @@ class _UserDashboardState extends State<UserDashboard> {
                       if (isSaved) {
                         Get.snackbar(
                           "Success",
-                          "Savings record updated successfully ${data}",
+                          "Savings record updated successfully",
                         );
                         _loadSavings();
                       } else {
@@ -244,7 +244,7 @@ class _UserDashboardState extends State<UserDashboard> {
               },
             )
           : Center(
-              child: isLoading
+              child: (isLoading && savingsRecords.isEmpty)
                   ? CircularProgressIndicator()
                   : Text("No Record found."),
             ),
@@ -339,6 +339,9 @@ class _UserDashboardState extends State<UserDashboard> {
   }
 
   void _loadSavings() async {
+    setState(() {
+      isLoading = true;
+    });
     await sharedPref.getJsonData().then((value) {
       if (value!.isEmpty) {
         setState(() {
@@ -348,9 +351,7 @@ class _UserDashboardState extends State<UserDashboard> {
       }
 
       setState(() {
-        savingsRecords = value['savings'].where(
-          (data) => {data['member_id'] == value['member_id']},
-        );
+        savingsRecords = value['savings'];
         isLoading = false;
       });
     });
