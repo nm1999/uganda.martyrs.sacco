@@ -34,7 +34,7 @@ class _SignupState extends State<Signup> {
         final jsonData = json.decode(result);
         if (jsonData is Map &&
             jsonData.containsKey('user_id') &&
-            jsonData['user_id'] is int && jsonData.containsKey("firstname")) {
+            jsonData.containsKey("firstName")) {
           await SharedPrefService.saveUserId(jsonData['user_id']);
           Get.to(() => ConsentScreen(userDataJson: result));
         } else {
