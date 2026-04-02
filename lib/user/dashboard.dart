@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ugandamartyrssacco/common/sharedPref.dart';
@@ -16,8 +15,8 @@ class UserDashboard extends StatefulWidget {
 
 class _UserDashboardState extends State<UserDashboard> {
   SharedPrefService sharedPref = SharedPrefService();
-  final double totalSavings = 450000;
-  bool isLoading = true;
+  double totalSavings = 0;
+  bool isLoading = false;
   List<dynamic> savingsRecords = [];
 
   @override
@@ -122,16 +121,17 @@ class _UserDashboardState extends State<UserDashboard> {
                   if (result != null && result.isNotEmpty) {
                     //check for the json string
                     Map<String, dynamic> data = jsonDecode(result);
+
                     if (data.containsKey("user_id") &&
-                        data.containsKey("members")) {
+                        data.containsKey("savings")) {
                       // save data
                       bool isSaved = await sharedPref.saveJsonData(data);
                       if (isSaved) {
-                        _loadSavings();
                         Get.snackbar(
                           "Success",
                           "Savings record updated successfully",
                         );
+                        _loadSavings();
                       } else {
                         Get.snackbar(
                           "Error Occured",
@@ -243,7 +243,7 @@ class _UserDashboardState extends State<UserDashboard> {
               },
             )
           : Center(
-              child: isLoading
+              child: (isLoading && savingsRecords.isEmpty)
                   ? CircularProgressIndicator()
                   : Text("No Record found."),
             ),
@@ -272,14 +272,14 @@ class _UserDashboardState extends State<UserDashboard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                 " record['type']",
+                  "member",
                   style: Theme.of(
                     context,
                   ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                 " record['description']",
+                  record['member_id'].toString(),
                   style: Theme.of(
                     context,
                   ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
@@ -337,18 +337,33 @@ class _UserDashboardState extends State<UserDashboard> {
         .replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (match) => ',');
   }
 
-  void _loadSavings() {
-    sharedPref.getJsonData().then((value) {
+  void _loadSavings() async {
+    setState(() {
+      isLoading = true;
+      totalSavings = 0;
+    });
+    await sharedPref.getJsonData().then((value) {
       if (value!.isEmpty) {
         setState(() {
           isLoading = false;
         });
         return;
       }
-      Get.snackbar("data",value['savings']);
+
       setState(() {
-        savingsRecords = value['savings'];
+        savingsRecords = value['savings']
+            .where((data) => data['member_id'] == value['user_id'])
+            .toList();
         isLoading = false;
+      });
+
+      double sum = 0;
+      for (var i = 0; i < savingsRecords.length; i++) {
+        sum += savingsRecords[i]['amount'];
+      }
+
+      setState(() {
+        totalSavings = sum;
       });
     });
   }
