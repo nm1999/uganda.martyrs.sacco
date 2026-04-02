@@ -23,7 +23,7 @@ class _SplashscreenState extends State<Splashscreen>
 
   void isSignUp() async {
     int? userId = await pref.getUserId();
-    if (!(userId!.isNaN)) {
+    if (userId != null) {
       Get.to(() => UserDashboard());
     } else {
       Get.to(() => const Login());
