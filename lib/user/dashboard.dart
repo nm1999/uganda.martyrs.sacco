@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class UserDashboard extends StatefulWidget {
 
 class _UserDashboardState extends State<UserDashboard> {
   SharedPrefService sharedPref = SharedPrefService();
-  final double totalSavings = 450000;
+  double totalSavings = 0;
   bool isLoading = false;
   List<dynamic> savingsRecords = [];
 
@@ -341,6 +342,7 @@ class _UserDashboardState extends State<UserDashboard> {
   void _loadSavings() async {
     setState(() {
       isLoading = true;
+      totalSavings = 0;
     });
     await sharedPref.getJsonData().then((value) {
       if (value!.isEmpty) {
@@ -355,6 +357,15 @@ class _UserDashboardState extends State<UserDashboard> {
             .where((data) => data['member_id'] == value['user_id'])
             .toList();
         isLoading = false;
+      });
+
+      double sum = 0;
+      for (var i = 0; i < savingsRecords.length; i++) {
+        sum += savingsRecords[i]['amount'];
+      }
+
+      setState(() {
+        totalSavings = sum;
       });
     });
   }
