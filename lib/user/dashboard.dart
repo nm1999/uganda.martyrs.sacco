@@ -122,7 +122,7 @@ class _UserDashboardState extends State<UserDashboard> {
                   if (result != null && result.isNotEmpty) {
                     //check for the json string
                     Map<String, dynamic> data = jsonDecode(result);
-                    
+
                     if (data.containsKey("user_id") &&
                         data.containsKey("savings")) {
                       // save data
@@ -351,7 +351,9 @@ class _UserDashboardState extends State<UserDashboard> {
       }
 
       setState(() {
-        savingsRecords = value['savings'];
+        savingsRecords = value['savings']
+            .where((data) => data['member_id'] == value['user_id'])
+            .toList();
         isLoading = false;
       });
     });
