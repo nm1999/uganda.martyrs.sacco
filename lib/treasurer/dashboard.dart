@@ -51,41 +51,53 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
           children: [
             // Welcome section
             _buildWelcomeSection(),
-            const SizedBox(height: 24),
-
-            // Key metrics
+            SizedBox(height:12,),
             Text(
               'Financial Overview',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.normal,
                 fontSize: 16,
               ),
             ),
-            const SizedBox(height: 16),
-
-            // Main financial cards
-            _buildFinancialCard(
-              title: 'Total Money Collected',
-              amount: totalMoneyCollected,
-              icon: Icons.attach_money,
-              color: Colors.green,
+            SizedBox(
+              height: 170,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  Container(
+                    width: 220,
+                    padding: const EdgeInsets.only(left:4,top: 12,right:12,bottom: 12),
+                    child: _buildFinancialCard(
+                      title: 'Total Money Collected',
+                      amount: totalMoneyCollected,
+                      icon: Icons.attach_money,
+                      color: Colors.green,
+                    ),
+                  ),
+                  Container(
+                    width: 220,
+                    padding: const EdgeInsets.all(12),
+                    child: _buildFinancialCard(
+                      title: 'Account Balance',
+                      amount: accountBalance,
+                      icon: Icons.account_balance_wallet,
+                      color: Colors.blue,
+                    ),
+                  ),
+                  Container(
+                    width: 220,
+                    padding: const EdgeInsets.all(12),
+                    child: _buildFinancialCard(
+                      title: 'This Month Collections',
+                      amount: monthlyCollections,
+                      icon: Icons.trending_up,
+                      color: Colors.orange,
+                    ),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 12),
 
-            _buildFinancialCard(
-              title: 'Account Balance',
-              amount: accountBalance,
-              icon: Icons.account_balance_wallet,
-              color: Colors.blue,
-            ),
-            const SizedBox(height: 12),
-
-            _buildFinancialCard(
-              title: 'This Month Collections',
-              amount: monthlyCollections,
-              icon: Icons.trending_up,
-              color: Colors.orange,
-            ),
             const SizedBox(height: 24),
 
             // Membership and Loans section
@@ -199,36 +211,25 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
   }
 
   Widget _buildWelcomeSection() {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.blue[700]!, Colors.blue[500]!],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Welcome, Treasurer',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height:10,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Welcome,",
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Manage and monitor your SACCO finances',
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(color: Colors.white70),
-          ),
-        ],
-      ),
+            Icon(Icons.person_pin, color: Colors.blue[700], size: 28),
+          ],
+        ),
+      ],
     );
   }
 
@@ -253,16 +254,19 @@ class _TreasurerDashboardState extends State<TreasurerDashboard> {
       padding: const EdgeInsets.all(16),
       child: Row(
         children: [
-          Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
-            padding: const EdgeInsets.all(12),
-            child: Icon(icon, color: color, size: 28),
-          ),
-          const SizedBox(width: 16),
+          //
+          // const SizedBox(width: 16),
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: const EdgeInsets.all(4),
+                  child: Icon(icon, color: color, size: 48),
+                ),
                 Text(
                   title,
                   style: Theme.of(
